@@ -1,2 +1,2 @@
-# ZelMigrationGuide
-The Migration Guide for the Zel Game Engine
+# ZelEngineMigrationGuide
+Repository of the Zel Game Engine's Migration Guide.

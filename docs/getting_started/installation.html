@@ -1,0 +1,402 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Installation &mdash; Zel Game Engine 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Quick Start" href="quickstart.html" />
+    <link rel="prev" title="Platforms" href="../about/platforms.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #081335" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/docs_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/philosofy.html">Philosofy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../about/platforms.html">Platforms</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../about/platforms.html#supported-developement-platforms">Supported Developement Platforms</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../about/platforms.html#supported-build-platforms">Supported Build Platforms</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Getting Started:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-the-engine">Downloading The Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cloning-the-repository">Cloning The Repository</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloading-the-repository">Downloading The Repository</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-glfw">Downloading GLFW</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setting-up-visual-studio">Setting Up Visual Studio</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#directories-setup">Directories Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#include">Include</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#library">Library</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#configurations">Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#testing-the-setup">Testing the setup</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-next">What’s Next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#setup">Setup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#user-code">User Code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#initialization">Initialization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#logic">Logic</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#render">Render</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#termination">Termination</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#including">Including</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#what-s-next">What’s Next?</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Basics</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../basics/levels.html">Levels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/levels.html#creating-a-level">Creating a level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/levels.html#registering-components">Registering components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/levels.html#registering-systems">Registering Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/levels.html#creating-entities">Creating entities</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/entities.html">Entities</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/entities.html#entity-ids">Entity IDs</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/entities.html#index">Index</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/entities.html#generational-index">Generational Index</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/entities.html#creating-an-entity">Creating an entity</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/components.html#registering-components">Registering components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/components.html#adding-components">Adding components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/components.html#checking-getting-components">Checking &amp; getting components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/systems.html">Systems</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/systems.html#template">Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/systems.html#registering-a-system">Registering a system</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/systems.html#entities-list-iterator">Entities list iterator</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/rendering.html">Rendering</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../basics/input.html">Input</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../basics/input.html#available-keys">Available Keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../basics/input.html#different-key-presses">Different Key Presses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../basics/input.html#key-press">Key Press</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/input.html#key-hold">Key Hold</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../basics/input.html#key-release">Key Release</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Examples:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../examples/index.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../examples/rendering/rendering_sprite.html">Rendering a Sprite</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">API Reference:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../api/index.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api/class_ZelComponent.html">ZelComponent</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/struct_zel_level_t.html">zel_level_t</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/file_zel_component_builtin_h.html">zel_component_builtin.h</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api/file_zel_level_h.html">zel_level.h</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Zel Game Engine</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/getting_started/installation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<span id="getting-started-installation"></span><h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p>This page describes the process to install the Zel Game Engine on your machine.</p>
+<div class="section" id="downloading-the-engine">
+<h2>Downloading The Engine<a class="headerlink" href="#downloading-the-engine" title="Permalink to this headline">¶</a></h2>
+<p>First you need to download the required files.
+This can be done by cloning the Github repository or just downloading it directly.</p>
+<p>If you’ve never used Github before the recommended option is to go to <a class="reference internal" href="#downloading-rep"><span class="std std-ref">Downloading The Repository</span></a></p>
+<div class="section" id="cloning-the-repository">
+<h3>Cloning The Repository<a class="headerlink" href="#cloning-the-repository" title="Permalink to this headline">¶</a></h3>
+<p>Cloning a repository won’t be explained in this documentation.
+Luckily there are plenty of resources out there including <a class="reference external" href="https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/cloning-a-repository">Github’s own documentation</a>.</p>
+<p>The engine’s repository can be found <a class="reference external" href="https://github.com/NVriezen/ZelGameEngine">here</a>.
+It has most of the files needed for the engine.</p>
+<p>When you have cloned the repository, you can skip to <a class="reference internal" href="#setting-up-glfw"><span class="std std-ref">Downloading GLFW</span></a>.</p>
+</div>
+<div class="section" id="downloading-the-repository">
+<span id="downloading-rep"></span><h3>Downloading The Repository<a class="headerlink" href="#downloading-the-repository" title="Permalink to this headline">¶</a></h3>
+<p>Downloading the engine is rather simple.
+Go to <a class="reference external" href="https://github.com/NVriezen/ZelGameEngine">the engine’s repository</a>.
+Then click on the green <strong>code</strong> button and click on <strong>Download Zip</strong> in the dropdown menu.
+This way you’ll download the latest master version of the engine.</p>
+</div>
+</div>
+<div class="section" id="downloading-glfw">
+<span id="setting-up-glfw"></span><h2>Downloading GLFW<a class="headerlink" href="#downloading-glfw" title="Permalink to this headline">¶</a></h2>
+<p>The engine uses GLFW to draw a window and manage inputs for us.
+We need to download GLFW and set it up in Visual Studio correctly.</p>
+<p>Download the correct pre-compiled binaries for your machine <a class="reference external" href="https://www.glfw.org/download.html">in GLFW’s download section</a>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>You can build the binaries yourself if you want. Make sure you build GLFW 3.3.2 or higher.</p>
+</div>
+<p>Extract the folder in the zip file somewhere on your machine.
+Preferably in a location where you can use it for other projects as well.</p>
+<p>Now we have all files we need to be able to build the engine.
+The only thing left is setting it up correctly in Visual Studio.</p>
+</div>
+<div class="section" id="setting-up-visual-studio">
+<span id="setting-up-vs"></span><h2>Setting Up Visual Studio<a class="headerlink" href="#setting-up-visual-studio" title="Permalink to this headline">¶</a></h2>
+<p>Right now the engine has only been used with Visual Studio 2015.
+Other build environments won’t be supported anytime soon.
+Any Visual Studio version from VS2015 onwards should be good though.</p>
+<p>Open the solution through <code class="docutils literal notranslate"><span class="pre">ZelGameEngine.sln</span></code>
+After Visual Studio loading the solution, you’ll see two projects.
+One named <code class="docutils literal notranslate"><span class="pre">Application</span></code> and another named <code class="docutils literal notranslate"><span class="pre">ZelGameEngine</span></code>.</p>
+<div class="section" id="directories-setup">
+<h3>Directories Setup<a class="headerlink" href="#directories-setup" title="Permalink to this headline">¶</a></h3>
+<p>Right-click on the <code class="docutils literal notranslate"><span class="pre">ZelGameEngine</span></code> project and select <code class="docutils literal notranslate"><span class="pre">Properties</span></code>.
+This should open a window where you can change the configuration properties.
+In the top left set the configuration to <code class="docutils literal notranslate"><span class="pre">All</span> <span class="pre">Configurations</span></code>.
+After that select <code class="docutils literal notranslate"><span class="pre">VC++</span> <span class="pre">Directories</span></code> in the left column.
+Here we need to set up GLFW for the project.</p>
+<div class="section" id="include">
+<h4>Include<a class="headerlink" href="#include" title="Permalink to this headline">¶</a></h4>
+<p>Click the dropdown button in the <code class="docutils literal notranslate"><span class="pre">Include</span> <span class="pre">Directories</span></code> row on the right and then “Edit…”.
+You’ll see something like <code class="docutils literal notranslate"><span class="pre">$(SolutionDir)..\..\GLFW\glfw-3.3.2.bin.WIN64\include</span></code>.
+Change this path to where you stored the include folder of GLFW for the selected platform (in this example Windows 10 64-bit).</p>
+</div>
+<div class="section" id="library">
+<h4>Library<a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h4>
+<p>Do the same for the <code class="docutils literal notranslate"><span class="pre">Library</span> <span class="pre">Directories</span></code> row as you did for the <code class="docutils literal notranslate"><span class="pre">Include</span> <span class="pre">Directories</span></code> one.
+Change the path to point towards the correct <code class="docutils literal notranslate"><span class="pre">lib-</span></code> folder based on your Visual Studio version.</p>
+<p>Great! GLFW should be setup now.</p>
+</div>
+</div>
+<div class="section" id="configurations">
+<h3>Configurations<a class="headerlink" href="#configurations" title="Permalink to this headline">¶</a></h3>
+<p>The engine works with two configurations: <code class="docutils literal notranslate"><span class="pre">Debug</span></code> and <code class="docutils literal notranslate"><span class="pre">Release</span></code>.
+Some features may be disabled in the Release configuration.
+The output console, where all messages from <code class="docutils literal notranslate"><span class="pre">zel_print</span></code> will appear, is one of them.</p>
+</div>
+<div class="section" id="testing-the-setup">
+<h3>Testing the setup<a class="headerlink" href="#testing-the-setup" title="Permalink to this headline">¶</a></h3>
+<p>At this point you should be able to run the project.
+Be sure to set the configuration on <code class="docutils literal notranslate"><span class="pre">Debug</span></code>.</p>
+<p>If everything went well, you won’t be seeing any build errors.
+A somewhat dark (blue) window should appear with a command prompt window.
+In the command prompt window you can see the engine’s version as well as “Hello World”.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If you do get errors or any other issue, please <strong>check again</strong> if you followed the instructions correctly. If the problems persist, please open an issue on the documentation’s <a class="reference external" href="https://github.com/NVriezen/ZelEngineDocs/issues">Github issues page</a> describing the problem you have.</p>
+</div>
+</div>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s Next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>Now that you have everything setup, you can create your game.
+You may check out the <a class="reference internal" href="../examples/index.html#examples"><span class="std std-ref">Examples</span></a> section to help you get underway.
+Otherwise check out the <a class="reference internal" href="../api/index.html#api"><span class="std std-ref">API Reference</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="quickstart.html" class="btn btn-neutral float-right" title="Quick Start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="../about/platforms.html" class="btn btn-neutral float-left" title="Platforms" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, NVriezen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
