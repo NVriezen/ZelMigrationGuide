@@ -21,10 +21,10 @@
     --navbar-level-1-color: #c3e3ff;
     --navbar-level-2-color: #b8d6f0;
     --navbar-level-3-color: #a3c4e1;
-    --navbar-heading-color: #ffc700;
-    --navbar-scrollbar-color: #ffb500;
-    --navbar-scrollbar-hover-color: #ff9300;
-    --navbar-scrollbar-active-color: #e07500;
+    --navbar-heading-color: #ffffff;
+    --navbar-scrollbar-color: #dedede;
+    --navbar-scrollbar-hover-color: #9b9b9b;
+    --navbar-scrollbar-active-color: #7e7e7e;
     --navbar-scrollbar-background: #131e2b;
 
     --link-color: #2980b9;
@@ -101,18 +101,18 @@
         /* Decrease the logo opacity when using the dark theme to be less distracting */
         --logo-opacity: 0.85;
         --navbar-background-color: #232323;
-        --navbar-background-color-hover: #5c4800;
+        --navbar-background-color-hover: #505050;
         --navbar-background-color-active: #6f6f6f;
         --navbar-current-background-color: #333333;
-        --navbar-current-background-color-hover: #826500;
-        --navbar-current-background-color-active: #cfac32;
+        --navbar-current-background-color-hover: #868686;
+        --navbar-current-background-color-active: #d8d8d8;
         --navbar-level-1-color: #ddd;
         --navbar-level-2-color: #ccc;
         --navbar-level-3-color: #bbb;
-        --navbar-heading-color: #ffc700;
-        --navbar-scrollbar-color: #ffb500;
-        --navbar-scrollbar-hover-color: #ff9300;
-        --navbar-scrollbar-active-color: #e07500;
+        --navbar-heading-color: #ffffff;
+        --navbar-scrollbar-color: #dedede;
+        --navbar-scrollbar-hover-color: #9b9b9b;
+        --navbar-scrollbar-active-color: #7e7e7e;
         --navbar-scrollbar-background: #131e2b;
 
         --link-color: #8cf;

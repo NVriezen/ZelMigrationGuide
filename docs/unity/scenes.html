@@ -1,0 +1,257 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scenes &mdash; Zel Game Engine Migration Guide 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #081335" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/guide_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/purpose.html">Purpose</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Unity:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="gameobjects.html">GameObjects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#entities">Entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="components.html#only-data">Only Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html#using-adding-components">Using &amp; Adding Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="components.html#getting-components">Getting Components</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Zel Game Engine Migration Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Scenes</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/unity/scenes.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scenes">
+<span id="unity-scenes"></span><h1>Scenes<a class="headerlink" href="#scenes" title="Permalink to this headline">¶</a></h1>
+<p>In Unity you would make your game inside one or multiple Scenes.
+These scenes can represent a single town, a single stage or something like the main menu of a game.
+Different scenes can be loaded at the same time or one after another.</p>
+<p>In the Zel Game Engine this concept of scenes is represented in <strong>Levels</strong>.
+A Level contains Entities, Components and Systems.
+They all need to be created or registered in order to be used inside a Level.</p>
+<div class="section" id="multiple-scenes">
+<h2>Multiple Scenes<a class="headerlink" href="#multiple-scenes" title="Permalink to this headline">¶</a></h2>
+<p>It is possible to create <strong>multiple Levels</strong> just like in Unity.
+The important thing to note here is that Entities or Components can <strong>only access data from within their own Level</strong>.
+So if the player want to access an Enemy from a different Level than the player is in, that is not possible.</p>
+<p>Also there can only be <strong>one active level</strong> at the moment through the <code class="docutils literal notranslate"><span class="pre">active_level</span></code> variable.
+You can write your own level manager to be able to use multiple Levels at once.</p>
+</div>
+<div class="section" id="scene-manager">
+<h2>Scene Manager<a class="headerlink" href="#scene-manager" title="Permalink to this headline">¶</a></h2>
+<p>For the moment there is no Level Manager in the Zel Game Engine.
+Loading and unloading levels is done through <code class="docutils literal notranslate"><span class="pre">zel_level_create</span></code> and <code class="docutils literal notranslate"><span class="pre">zel_level_destroy</span></code>.</p>
+<p>There must always be a level assigned to <code class="docutils literal notranslate"><span class="pre">active_level</span></code>.
+So when switching levels, this needs to be done in <strong>one frame</strong>.
+Destroying the old level and immediately creating the new one.</p>
+</div>
+<div class="section" id="running-a-level">
+<h2>Running a Level<a class="headerlink" href="#running-a-level" title="Permalink to this headline">¶</a></h2>
+<p>When running a Scene in Unity all the <code class="docutils literal notranslate"><span class="pre">Update</span></code>, <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> and <code class="docutils literal notranslate"><span class="pre">LateUpdate</span></code> functions get called together with all kinds of other functions.
+In the Zel Game Engine only <code class="docutils literal notranslate"><span class="pre">zel_logic</span></code> and <code class="docutils literal notranslate"><span class="pre">zel_render</span></code> get called.
+As the names may suggest <code class="docutils literal notranslate"><span class="pre">zel_render</span></code> is for all your rendering code.
+While all Systems that you have registered in a Level are called in <code class="docutils literal notranslate"><span class="pre">zel_logic</span></code>.</p>
+<p>You can decide what happens inside these functions.
+So if you decide you want to do it a different way, that is totally possible.
+Have a look at the <a class="reference internal" href="update.html#unity-update"><span class="std std-ref">Update section</span></a> for more information.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, NVriezen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

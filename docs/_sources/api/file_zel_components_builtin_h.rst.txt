@@ -1,6 +1,0 @@
-.. _zel_components_builtin_h:
-
-zel_components_builtin.h
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. doxygenfile:: zel_components_builtin.h

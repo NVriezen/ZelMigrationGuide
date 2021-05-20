@@ -1,0 +1,282 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Components &mdash; Zel Game Engine Migration Guide 0.1.0 documentation</title>
+  
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+
+  
+  
+    <link rel="shortcut icon" href="../_static/favicon.ico"/>
+  
+
+  
+  
+
+  
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="GameObjects" href="gameobjects.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search"  style="background: #081335" >
+          
+
+          
+            <a href="../index.html">
+          
+
+          
+            
+            <img src="../_static/guide_logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">About:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../about/purpose.html">Purpose</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Unity:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="gameobjects.html">GameObjects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#entities">Entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#only-data">Only Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-adding-components">Using &amp; Adding Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-components">Getting Components</a></li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+        
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Zel Game Engine Migration Guide</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html" class="icon icon-home"></a> &raquo;</li>
+        
+      <li>Components</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="../_sources/unity/components.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="components">
+<span id="unity-components"></span><h1>Components<a class="headerlink" href="#components" title="Permalink to this headline">¶</a></h1>
+<p>Components in the Zel Game Engine are somewhat similar to the components in Unity.
+In Unity you add <strong>Components</strong> to <strong>GameObjects</strong>, while in the Zel Game Engine you add <strong>Components</strong> to <strong>Entities</strong>.</p>
+<p>However the biggest difference between the two is that <strong>Components in the Zel Game Engine only contain data</strong>. Nothing else.
+The reason for this is to be able to pack this <strong>data closely together</strong> and manipulate this data all at once.</p>
+<div class="section" id="only-data">
+<h2>Only Data<a class="headerlink" href="#only-data" title="Permalink to this headline">¶</a></h2>
+<p>Take for example in-game movement. You could have a player and 5 enemies.
+They all move in the same way so their <strong>code is identical</strong>.
+In Unity you make a base component or class. Let’s call it the movement component.
+You would write your movement code in there.
+The player and enemy classes will <strong>inherit</strong> from this movement class.
+So when you call player.Move() or enemy.Move(), <strong>the same code gets executed</strong>.</p>
+<p>The way the Zel Game Engine handles this is a bit different.
+<strong>Data and logic are separated</strong>, but we still have a movement component.
+This component only contains the variables for the velocity, acceleration, etc.
+We add this component to the player and enemy Entities, just like we would in Unity.</p>
+<p>The movement code however, which is identical between player and enemy, is located in a <a class="reference internal" href="update.html#unity-update"><span class="std std-ref">System</span></a>.
+This System <strong>manipulates all movement components</strong>.
+The benefit of this is that data is closely packed together in memory.
+When the CPU runs the code it doesn’t have to constantly wait for data to be fetched from RAM. Which is a <strong>very slow process</strong> compared to fetching from cache.</p>
+<p>For a <strong>quick explanation</strong> what cache is and the difference between cache and main memory(RAM) you can watch <a class="reference external" href="https://www.youtube.com/watch?v=IA8au8Qr3lo">this YouTube video</a> from Eye on Tech.</p>
+</div>
+<div class="section" id="using-adding-components">
+<h2>Using &amp; Adding Components<a class="headerlink" href="#using-adding-components" title="Permalink to this headline">¶</a></h2>
+<p>Adding Components to Entities is somewhat done in the same way as adding Components to GameObjects in Unity.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_transform_t</span> <span class="n">transform</span><span class="p">{</span> <span class="p">{</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span> <span class="p">},{</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span> <span class="p">},{</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span> <span class="p">}</span> <span class="p">};</span>
+<span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">transform</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>What is different however is the need to register component types.
+That means if you want to use a Transform Component you need to register it.
+Otherwise the engine does not know about the Component and it will crash.
+You can do this at any time, but it is recommended to do this when creating a <a class="reference internal" href="scenes.html#unity-scenes"><span class="std std-ref">Level</span></a>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_level_register_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>For a more detailed explanation about registering components, please see the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/components.html#registering-components">Components section</a> in the engine’s documentation.</p>
+</div>
+<div class="section" id="getting-components">
+<h2>Getting Components<a class="headerlink" href="#getting-components" title="Permalink to this headline">¶</a></h2>
+<p>When you want to access a variable in a certain component, you first have to get a pointer to that component.
+This is done in a somewhat similar way as with Unity’s <code class="docutils literal notranslate"><span class="pre">gameObject.GetComponent()</span></code>.
+However you also need to pass the Level where the Entity exists in.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">transform_component_ptr</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>There is also a way to only check if an entity has a certain combination of components.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_level_has_components</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As you can see you can pass in only one or multiple component types.</p>
+<p>Again, if you’d like to get a more detailed look at Components, look at the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/components.html">engine’s documentation</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+        <a href="gameobjects.html" class="btn btn-neutral float-left" title="GameObjects" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &#169; Copyright 2021, NVriezen.
+
+    </p>
+  </div>
+    
+    
+    
+    Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

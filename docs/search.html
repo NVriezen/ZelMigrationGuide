@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Search &mdash; Zel Game Engine 0.1.0 documentation</title>
+  <title>Search &mdash; Zel Game Engine Migration Guide 0.1.0 documentation</title>
   
 
   
@@ -62,7 +62,7 @@
 
           
             
-            <img src="_static/docs_logo.png" class="logo" alt="Logo"/>
+            <img src="_static/guide_logo.png" class="logo" alt="Logo"/>
           
           </a>
 
@@ -93,103 +93,28 @@
             
               <p class="caption"><span class="caption-text">About:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="about/philosofy.html">Philosofy</a></li>
-<li class="toctree-l1"><a class="reference internal" href="about/platforms.html">Platforms</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="about/platforms.html#supported-developement-platforms">Supported Developement Platforms</a></li>
-<li class="toctree-l2"><a class="reference internal" href="about/platforms.html#supported-build-platforms">Supported Build Platforms</a></li>
+<li class="toctree-l1"><a class="reference internal" href="about/purpose.html">Purpose</a></li>
 </ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Getting Started:</span></p>
+<p class="caption"><span class="caption-text">Unity:</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="getting_started/installation.html">Installation</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/installation.html#downloading-the-engine">Downloading The Engine</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="getting_started/installation.html#cloning-the-repository">Cloning The Repository</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting_started/installation.html#downloading-the-repository">Downloading The Repository</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unity/gameobjects.html">GameObjects</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#entities">Entities</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#transform">Transform</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/installation.html#downloading-glfw">Downloading GLFW</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/installation.html#setting-up-visual-studio">Setting Up Visual Studio</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="getting_started/installation.html#directories-setup">Directories Setup</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="getting_started/installation.html#include">Include</a></li>
-<li class="toctree-l4"><a class="reference internal" href="getting_started/installation.html#library">Library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unity/components.html">Components</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unity/components.html#only-data">Only Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/components.html#using-adding-components">Using &amp; Adding Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/components.html#getting-components">Getting Components</a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="getting_started/installation.html#configurations">Configurations</a></li>
-<li class="toctree-l3"><a class="reference internal" href="getting_started/installation.html#testing-the-setup">Testing the setup</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/installation.html#what-s-next">What’s Next?</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="getting_started/quickstart.html">Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#setup">Setup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#user-code">User Code</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#initialization">Initialization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#logic">Logic</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#render">Render</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#termination">Termination</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#including">Including</a></li>
-<li class="toctree-l2"><a class="reference internal" href="getting_started/quickstart.html#what-s-next">What’s Next?</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Basics</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="basics/levels.html">Levels</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/levels.html#creating-a-level">Creating a level</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/levels.html#registering-components">Registering components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/levels.html#registering-systems">Registering Systems</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/levels.html#creating-entities">Creating entities</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="basics/entities.html">Entities</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/entities.html#entity-ids">Entity IDs</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="basics/entities.html#index">Index</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/entities.html#generational-index">Generational Index</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="basics/entities.html#creating-an-entity">Creating an entity</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="basics/components.html">Components</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/components.html#registering-components">Registering components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/components.html#adding-components">Adding components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/components.html#checking-getting-components">Checking &amp; getting components</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="basics/systems.html">Systems</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/systems.html#template">Template</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/systems.html#registering-a-system">Registering a system</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/systems.html#entities-list-iterator">Entities list iterator</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="basics/rendering.html">Rendering</a></li>
-<li class="toctree-l1"><a class="reference internal" href="basics/input.html">Input</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="basics/input.html#available-keys">Available Keys</a></li>
-<li class="toctree-l2"><a class="reference internal" href="basics/input.html#different-key-presses">Different Key Presses</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="basics/input.html#key-press">Key Press</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/input.html#key-hold">Key Hold</a></li>
-<li class="toctree-l3"><a class="reference internal" href="basics/input.html#key-release">Key Release</a></li>
-</ul>
-</li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">Examples:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="examples/index.html">Examples</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="examples/rendering/rendering_sprite.html">Rendering a Sprite</a></li>
-</ul>
-</li>
-</ul>
-<p class="caption"><span class="caption-text">API Reference:</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="api/index.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api/class_ZelComponent.html">ZelComponent</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/struct_zel_level_t.html">zel_level_t</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/file_zel_component_builtin_h.html">zel_component_builtin.h</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api/file_zel_level_h.html">zel_level.h</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unity/update.html">Update</a></li>
+<li class="toctree-l1"><a class="reference internal" href="unity/scenes.html">Scenes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="unity/scenes.html#multiple-scenes">Multiple Scenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/scenes.html#scene-manager">Scene Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/scenes.html#running-a-level">Running a Level</a></li>
 </ul>
 </li>
 </ul>
@@ -207,7 +132,7 @@
       <nav class="wy-nav-top" aria-label="top navigation">
         
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">Zel Game Engine</a>
+          <a href="index.html">Zel Game Engine Migration Guide</a>
         
       </nav>
 
