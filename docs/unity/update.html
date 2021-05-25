@@ -100,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#entities">Entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
@@ -109,7 +110,13 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html#getting-components">Getting Components</a></li>
 </ul>
 </li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Update</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#system">System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#differences">Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#manipulating-components">Manipulating Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why">Why?</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="scenes.html">Scenes</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="scenes.html#multiple-scenes">Multiple Scenes</a></li>
 <li class="toctree-l2"><a class="reference internal" href="scenes.html#scene-manager">Scene Manager</a></li>
@@ -185,6 +192,72 @@
             
   <div class="section" id="update">
 <span id="unity-update"></span><h1>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
+<p>In Unity every class or Component that inherits from MonoBehaviour can use the <code class="docutils literal notranslate"><span class="pre">Update</span></code> function.
+This is where you can put code which should run every frame.
+Apart from <code class="docutils literal notranslate"><span class="pre">Update</span></code> there is also <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> and <code class="docutils literal notranslate"><span class="pre">LateUpdate</span></code>.</p>
+<p>The Zel Game Engine doesn’t have update functions like <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> and <code class="docutils literal notranslate"><span class="pre">LateUpdate</span></code>.
+In fact, the engine approaches this concept a bit differently.</p>
+<div class="section" id="system">
+<h2>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h2>
+<p>All logic is put inside systems.
+When you need to move a character, you make a movement system.
+Or when you want enemies to attack the player, you create an AI enemy behavior system.</p>
+<p>As explained in other section of this guide, GameObjects in Unity contain data and logic.
+In the Zel Game Engine we split this data and logic up.
+Data is stored in components and the logic runs from within systems.
+It keeps everything very modular and flexible.</p>
+</div>
+<div class="section" id="differences">
+<h2>Differences<a class="headerlink" href="#differences" title="Permalink to this headline">¶</a></h2>
+<p>The difference between a System and Unity’s <code class="docutils literal notranslate"><span class="pre">Update</span></code> function is actually not that big.
+Systems are also just functions.
+However you need to explicitly register them.
+Being able to deregister them as well makes them a bit more powerful.</p>
+<p>To register a system you can simply so the following.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">my_custom_system</span><span class="p">(</span><span class="n">zel_level_t</span><span class="o">*</span> <span class="n">level</span><span class="p">,</span> <span class="kt">float</span> <span class="n">delta_time</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">zel_print</span><span class="p">(</span><span class="s">&quot;Print this every frame.</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="n">zel_level_register_system</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">my_custom_system</span><span class="p">,</span> <span class="s">&quot;MyCustomSystem&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>As you can see the system also has a delta time variable, just like in Unity.</p>
+<p>Being able to deregister the system has the benefit of turning off certain logic.
+Take for example an input system. Maybe the game should ignore player input for a couple seconds.
+You can easily achieve this by deregistering the input system and after a couple seconds re-register it again.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_level_unregister_system</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="s">&quot;MyCustomSystem&quot;</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="manipulating-components">
+<h2>Manipulating Components<a class="headerlink" href="#manipulating-components" title="Permalink to this headline">¶</a></h2>
+<p>Running a program is in essence nothing more than manipulating data.
+That’s why the engine is somewhat Data Oriented and separates the logic from the data.
+However when the data is stored in Components, how can a System access this data?
+The simplest way to do this is with a special iterator and for loop.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">//use the transform component here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>You use the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code> to specify which components an Entity must have.
+Then the list will contain an iterator which only return the Entities which have those components added to them.
+This means you can not only input one component type like above, but actually multiple component types.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="p">,</span> <span class="n">zel_mesh_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">//Now you can use the transform and the material components here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="why">
+<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
+<p>The reason why the engine uses Systems is to reduce the amount of cache misses.
+Instructions are also data and they are put into instruction cache before they are ran by the CPU.
+Reducing the amount of times to fetch instructions from main memory(RAM) can greatly reduce the time it takes to run your code.</p>
+</div>
 </div>
 
 

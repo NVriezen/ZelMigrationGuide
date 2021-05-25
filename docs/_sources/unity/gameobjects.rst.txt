@@ -51,6 +51,47 @@ So you first need to get the component you need and then you can access the Tran
 
 For more detailed information about **Components** and accessing their data, please see the :ref:`Components section<unity_components>`.
 
+Accessing GameObject
+--------------------
+In Unity you have several ways to find a particular GameObject.
+For example, you can use ``FindObjectOfType()`` or do ``GameObject.Find()``.
+
+The entities in the Zel Game Engine are just numbers, so we can not use names or anything.
+We could store the entity ID and access an Entity in that way.
+However if we don't have the entity ID, but we only want to run code for the player?
+As further explained in the :ref:`Update section<unity_scenes>` systems can iterate over entities.
+This is done by looking at the components an entity contains.
+
+.. code-block:: cpp
+
+	for (zel_entity_id entity : zel_entities_list<zel_transform_t>(level))
+	{
+			//use the transform component here
+	}
+
+When we give our player a tag we can easily find it through using the ``zel_entities_list``.
+
+.. code-block:: cpp
+
+	struct player_one_tag { };
+
+	zel_entity_id player_entity;
+	player_one_tag player1_tag;
+
+	zel_level_register_component<player_one_tag>(example_level);
+	zel_level_add_component(example_level, player_entity, player1_tag);
+
+	//This code would be placed inside a system
+	for (zel_entity_id entity : zel_entities_list<zel_transform, player1_tag>(level))
+	{
+			//Now we only get player 1 as entity
+			//So we can access player 1 and its transform component here.
+			zel_transform_t* player1_transform = zel_level_get_component<zel_transform_t>(example_level, entity);
+	}
+
+It's also very easy when you somehow want another entity to become player 1.
+Because you simply remove the tag from the current entity and add the player tag to the new entity.
+
 Why?
 ----
 The reason to split the logic and data up is to make the code **more modular**.

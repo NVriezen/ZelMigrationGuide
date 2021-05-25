@@ -100,6 +100,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#entities">Entities</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accessing-transform-component">Accessing Transform Component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-gameobject">Accessing GameObject</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#why">Why?</a></li>
 </ul>
 </li>
@@ -107,6 +108,19 @@
 <li class="toctree-l2"><a class="reference internal" href="components.html#only-data">Only Data</a></li>
 <li class="toctree-l2"><a class="reference internal" href="components.html#using-adding-components">Using &amp; Adding Components</a></li>
 <li class="toctree-l2"><a class="reference internal" href="components.html#getting-components">Getting Components</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="update.html">Update</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="update.html#system">System</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#differences">Differences</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#manipulating-components">Manipulating Components</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#why">Why?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="scenes.html">Scenes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scenes.html#multiple-scenes">Multiple Scenes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scenes.html#scene-manager">Scene Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scenes.html#running-a-level">Running a Level</a></li>
 </ul>
 </li>
 </ul>
@@ -214,6 +228,42 @@ So you first need to get the component you need and then you can access the Tran
 </pre></div>
 </div>
 <p>For more detailed information about <strong>Components</strong> and accessing their data, please see the <a class="reference internal" href="components.html#unity-components"><span class="std std-ref">Components section</span></a>.</p>
+</div>
+<div class="section" id="accessing-gameobject">
+<h2>Accessing GameObject<a class="headerlink" href="#accessing-gameobject" title="Permalink to this headline">¶</a></h2>
+<p>In Unity you have several ways to find a particular GameObject.
+For example, you can use <code class="docutils literal notranslate"><span class="pre">FindObjectOfType()</span></code> or do <code class="docutils literal notranslate"><span class="pre">GameObject.Find()</span></code>.</p>
+<p>The entities in the Zel Game Engine are just numbers, so we can not use names or anything.
+We could store the entity ID and access an Entity in that way.
+However if we don’t have the entity ID, but we only want to run code for the player?
+As further explained in the <a class="reference internal" href="scenes.html#unity-scenes"><span class="std std-ref">Update section</span></a> systems can iterate over entities.
+This is done by looking at the components an entity contains.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="p">{</span>
+                <span class="c1">//use the transform component here</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>When we give our player a tag we can easily find it through using the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code>.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">player_one_tag</span> <span class="p">{</span> <span class="p">};</span>
+
+<span class="n">zel_entity_id</span> <span class="n">player_entity</span><span class="p">;</span>
+<span class="n">player_one_tag</span> <span class="n">player1_tag</span><span class="p">;</span>
+
+<span class="n">zel_level_register_component</span><span class="o">&lt;</span><span class="n">player_one_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">);</span>
+<span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">player_entity</span><span class="p">,</span> <span class="n">player1_tag</span><span class="p">);</span>
+
+<span class="c1">//This code would be placed inside a system</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform</span><span class="p">,</span> <span class="n">player1_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="p">{</span>
+                <span class="c1">//Now we only get player 1 as entity</span>
+                <span class="c1">//So we can access player 1 and its transform component here.</span>
+                <span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">player1_transform</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>It’s also very easy when you somehow want another entity to become player 1.
+Because you simply remove the tag from the current entity and add the player tag to the new entity.</p>
 </div>
 <div class="section" id="why">
 <h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
