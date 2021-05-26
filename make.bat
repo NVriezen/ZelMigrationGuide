@@ -13,6 +13,7 @@ set BUILDDIR=_build
 if "%1" == "" goto help
 
 if "%1" == "github" (
+    %SPHINXBUILD% -M clean %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
     %SPHINXBUILD% -M html %SOURCEDIR% %BUILDDIR% %SPHINXOPTS%
     robocopy %BUILDDIR%/html docs /E > nul
     echo.Build is in %BUILDDIR%/html
