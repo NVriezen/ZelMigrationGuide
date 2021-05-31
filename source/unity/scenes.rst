@@ -24,7 +24,7 @@ Scene Manager
 For the moment there is no Level Manager in the Zel Game Engine.
 Loading and unloading levels is done through ``zel_level_create`` and ``zel_level_destroy``.
 
-There must always be a level assigned to ``active_level``.
+There must **always** be a level assigned to ``active_level``.
 So when switching levels, this needs to be done in **one frame**.
 Destroying the old level and immediately creating the new one.
 

@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -101,7 +103,6 @@
 <li class="toctree-l2"><a class="reference internal" href="../unity/gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../unity/gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../unity/gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../unity/gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../unity/components.html">Components</a><ul>
@@ -114,7 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="../unity/update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../unity/update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../unity/update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="../unity/update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../unity/update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../unity/scenes.html">Scenes</a><ul>
@@ -195,7 +196,7 @@
 <p>After testing the engine with multiple people I realized a guide explaining what this engine does differently would help users.
 That’s why this <strong>Migration Guide</strong> now exists.</p>
 <p>It will help you realize how this engine differs from the engine you are used to.
-The goal is to teach you a new way of thinking that is more Data oriented instead of Object Oriented which many popular programming languages and game engines are built upon.</p>
+The goal is to teach you a new way of thinking that is more Data Oriented instead of Object Oriented which many popular programming languages and game engines are built upon.</p>
 </div>
 
 
@@ -243,7 +244,18 @@ The goal is to teach you a new way of thinking that is more Data oriented instea
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

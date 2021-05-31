@@ -9,7 +9,7 @@ Welcome to Zel Game Engine's Migration Guide!
 This is the migration guide for the **Zel Game Engine.**
 It will help you think in a more Data Oriented by showcasing how the **Zel Game Engine**'s way of programming differs from the engine(s) you are used to.
 
-.. note:: If you want have not setup the engine yet, please check out the `Documentation Getting Started <https://nvriezen.github.io/ZelEngineDocs/>`_ section.
+.. note:: If you have not setup the engine yet, please check the `Getting Started <https://nvriezen.github.io/ZelEngineDocs/>`_ section in the documentation.
 
 .. toctree::
    :maxdepth: 2

@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -101,7 +103,6 @@
 <li class="toctree-l2"><a class="reference internal" href="#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a><ul>
@@ -114,7 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="scenes.html">Scenes</a><ul>
@@ -202,6 +203,30 @@ These <strong>GameObjects</strong> have <strong>Components</strong> attached to 
 It rather uses <strong>Entities</strong> as a representation of those things.</p>
 <p>In essence <strong>Entities</strong> are nothing more than a unique number. Components are then tied to this unique number, the entity. This can be used to create a sort of <strong>Game Object</strong> like you are used to.</p>
 <p>The important thing to note here is that <strong>Components</strong> in the <strong>Zel Game Engine</strong> do not have any logic, it’s only data. See the <a class="reference internal" href="components.html#unity-components"><span class="std std-ref">Components section</span></a> for more information on this.</p>
+<div class="in-depth admonition">
+<p class="admonition-title">Why?</p>
+<p>The reason to split the logic and data up is to make the code <strong>easier to debug and optimize</strong>.
+It can also make it <strong>more modular</strong>.
+This combined can increase a <strong>programmers productivity and joy of programming</strong>.</p>
+<p>It also makes it easier to pack the data closely together.
+This can help fit data inside the CPU cache and reduce wasting memory space.
+Which can also increase performance, since less data has to be loaded from RAM.</p>
+<p>Since all the logic and data is now placed inside Systems and Components respectively, the GameObjects are nothing more than a <strong>container for Components</strong>.
+However to represent a GameObject in this kind of way, we only need a <strong>unique identifier</strong>.
+This unique identifier or entity ID “owns” certain components and that is what makes it a player, enemy or just a tree.</p>
+<p>Let’s say we want a player.
+We create an Entity, which will get the ID 16777217.
+Then we create some components like a player tag, transform and movement component.
+We <strong>link</strong> these components to that specific entity ID 16777217 by adding them to that entity.
+By looking at an entity’s components we know what kind of entity it is, in this case a player.</p>
+<p>We could then easily change this player to an enemy.
+By removing the player tag component and attaching a component that represents enemies.
+This can greatly improve modularity, but also makes it easy to iterate over only enemies.
+Since we can look at all the entities with the specific enemy component.
+That’s exactly what systems do.</p>
+<p>In essence, an entity is just <strong>a unique number to which some data is associated</strong>.
+However it gives us a lot of flexibility over the standard Object Oriented approach.</p>
+</div>
 <p>If you want to learn how to create Entities, please take a look at the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/entities.html">Entities section</a> in the engine’s documentation.</p>
 </div>
 <div class="section" id="transform">
@@ -256,29 +281,14 @@ This is done by looking at the components an entity contains.</p>
 <span class="c1">//This code would be placed inside a system</span>
 <span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform</span><span class="p">,</span> <span class="n">player1_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
 <span class="p">{</span>
-                <span class="c1">//Now we only get player 1 as entity</span>
-                <span class="c1">//So we can access player 1 and its transform component here.</span>
-                <span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">player1_transform</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
+        <span class="c1">//Now we only get player 1 as entity</span>
+        <span class="c1">//So we can access player 1 and its transform component here.</span>
+        <span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">player1_transform</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 <p>It’s also very easy when you somehow want another entity to become player 1.
 Because you simply remove the tag from the current entity and add the player tag to the new entity.</p>
-</div>
-<div class="section" id="why">
-<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
-<p>The reason to split the logic and data up is to make the code <strong>more modular</strong>.
-It also makes it <strong>easier to debug and optimize</strong>.
-Which can increase a <strong>programmers productivity and joy of programming</strong>.</p>
-<p>Since all the logic and data is now placed inside Systems and Components, the GameObjects are nothing more than a <strong>container for Components</strong>.
-However to represent a GameObject in this kind of way, we only need a <strong>unique identifier</strong>.
-This unique identifier or entity ID “owns” certain components and that is what makes it a player, enemy or just a tree.</p>
-<p>Let’s say we want a player.
-We create an Entity, which will get the ID 16777217.
-Then we create some components like a player tag, transform and movement component.
-We <strong>link</strong> these components to that specific entity ID 16777217 by adding them to that entity.
-By looking at an entity’s components we know what kind of entity it is, in this case a player.
-But in essence, an entity is just <strong>a unique number to which some data is associated</strong>.</p>
 </div>
 </div>
 
@@ -327,7 +337,18 @@ But in essence, an entity is just <strong>a unique number to which some data is 
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

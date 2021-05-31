@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -100,7 +102,6 @@
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a><ul>
@@ -113,7 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Scenes</a><ul>
@@ -209,7 +210,7 @@ You can write your own level manager to be able to use multiple Levels at once.<
 <h2>Scene Manager<a class="headerlink" href="#scene-manager" title="Permalink to this headline">¶</a></h2>
 <p>For the moment there is no Level Manager in the Zel Game Engine.
 Loading and unloading levels is done through <code class="docutils literal notranslate"><span class="pre">zel_level_create</span></code> and <code class="docutils literal notranslate"><span class="pre">zel_level_destroy</span></code>.</p>
-<p>There must always be a level assigned to <code class="docutils literal notranslate"><span class="pre">active_level</span></code>.
+<p>There must <strong>always</strong> be a level assigned to <code class="docutils literal notranslate"><span class="pre">active_level</span></code>.
 So when switching levels, this needs to be done in <strong>one frame</strong>.
 Destroying the old level and immediately creating the new one.</p>
 </div>
@@ -269,7 +270,18 @@ Have a look at the <a class="reference internal" href="update.html#unity-update"
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

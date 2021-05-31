@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/custom.css" type="text/css" />
 
   
   
@@ -100,7 +102,6 @@
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="unity/components.html">Components</a><ul>
@@ -113,7 +114,7 @@
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="unity/update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="unity/scenes.html">Scenes</a><ul>
@@ -195,7 +196,7 @@
 It will help you think in a more Data Oriented by showcasing how the <strong>Zel Game Engine</strong>’s way of programming differs from the engine(s) you are used to.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>If you want have not setup the engine yet, please check out the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/">Documentation Getting Started</a> section.</p>
+<p>If you have not setup the engine yet, please check the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/">Getting Started</a> section in the documentation.</p>
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">About:</span></p>
@@ -211,7 +212,6 @@ It will help you think in a more Data Oriented by showcasing how the <strong>Zel
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="unity/gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="unity/components.html">Components</a><ul>
@@ -224,7 +224,7 @@ It will help you think in a more Data Oriented by showcasing how the <strong>Zel
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="unity/update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="unity/update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="unity/update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="unity/scenes.html">Scenes</a><ul>
@@ -289,7 +289,18 @@ It will help you think in a more Data Oriented by showcasing how the <strong>Zel
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

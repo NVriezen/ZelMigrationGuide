@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -101,7 +103,6 @@
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="components.html">Components</a><ul>
@@ -114,7 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="scenes.html">Scenes</a><ul>
@@ -192,26 +193,47 @@
             
   <div class="section" id="update">
 <span id="unity-update"></span><h1>Update<a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h1>
-<p>In Unity every class or Component that inherits from MonoBehaviour can use the <code class="docutils literal notranslate"><span class="pre">Update</span></code> function.
-This is where you can put code which should run every frame.
+<p>In Unity every class or Component that inherits from <code class="docutils literal notranslate"><span class="pre">MonoBehaviour</span></code> can use the <code class="docutils literal notranslate"><span class="pre">Update</span></code> function.
+This is where you can put code which should run <strong>every frame</strong>.
 Apart from <code class="docutils literal notranslate"><span class="pre">Update</span></code> there is also <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> and <code class="docutils literal notranslate"><span class="pre">LateUpdate</span></code>.</p>
 <p>The Zel Game Engine doesn’t have update functions like <code class="docutils literal notranslate"><span class="pre">FixedUpdate</span></code> and <code class="docutils literal notranslate"><span class="pre">LateUpdate</span></code>.
 In fact, the engine approaches this concept a bit differently.</p>
 <div class="section" id="system">
 <h2>System<a class="headerlink" href="#system" title="Permalink to this headline">¶</a></h2>
-<p>All logic is put inside systems.
+<p>All logic is put inside <strong>systems</strong>.
 When you need to move a character, you make a movement system.
 Or when you want enemies to attack the player, you create an AI enemy behavior system.</p>
 <p>As explained in other section of this guide, GameObjects in Unity contain data and logic.
 In the Zel Game Engine we split this data and logic up.
-Data is stored in components and the logic runs from within systems.
+Data is stored in components and the <strong>logic runs from within systems</strong>.
 It keeps everything very modular and flexible.</p>
+<div class="in-depth admonition">
+<p class="admonition-title">Why?</p>
+<p>We store the logic inside systems to be able to run the <strong>same logic on a lot of components</strong>.
+In Object Oriented Programming you would look at a single object.
+How that object behaves and functions.</p>
+<p>When targeting a more Data Oriented approach you need to look at the bigger picture.
+Does this code only run on one entity?
+You probably realize that some code actually runs on multiple instances of that entity.
+For example there may be multiple enemies targeting the player.</p>
+<p>That is where these Systems come in.
+By putting that logic into a system you can manipulate those enemies <strong>all at once</strong>.
+Sometimes literally through <strong>SIMD technology</strong>.</p>
+<div class="note admonition">
+<p class="admonition-title">SIMD</p>
+<p>Single instruction, multiple data (SIMD) is a class of parallel computers in Flynn’s taxonomy. It describes computers with multiple processing elements that perform the same operation on multiple data points simultaneously (source: Wikipedia).</p>
+</div>
+<p>You need to remember that instructions are also <strong>data</strong>.
+The instructions for the manipulation of the actual entity data is already in the <strong>CPU’s cache</strong>.
+That means the CPU does not have to constantly load new instructions from RAM.
+That is a <strong>very slow process</strong> and therefore <strong>reducing the amount of reading from RAM can increase performance</strong>.</p>
+</div>
 </div>
 <div class="section" id="differences">
 <h2>Differences<a class="headerlink" href="#differences" title="Permalink to this headline">¶</a></h2>
-<p>The difference between a System and Unity’s <code class="docutils literal notranslate"><span class="pre">Update</span></code> function is actually not that big.
+<p>The difference between a System and Unity’s <code class="docutils literal notranslate"><span class="pre">Update</span></code> function is actually not that significant.
 Systems are also just functions.
-However you need to explicitly register them.
+However you need to <strong>explicitly register</strong> them.
 Being able to deregister them as well makes them a bit more powerful.</p>
 <p>To register a system you can simply so the following.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="nf">my_custom_system</span><span class="p">(</span><span class="n">zel_level_t</span><span class="o">*</span> <span class="n">level</span><span class="p">,</span> <span class="kt">float</span> <span class="n">delta_time</span><span class="p">)</span>
@@ -222,7 +244,7 @@ Being able to deregister them as well makes them a bit more powerful.</p>
 <span class="n">zel_level_register_system</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">my_custom_system</span><span class="p">,</span> <span class="s">&quot;MyCustomSystem&quot;</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>As you can see the system also has a delta time variable, just like in Unity.</p>
+<p>As you can see the system also has a <strong>delta time</strong> variable, just like in Unity.</p>
 <p>Being able to deregister the system has the benefit of turning off certain logic.
 Take for example an input system. Maybe the game should ignore player input for a couple seconds.
 You can easily achieve this by deregistering the input system and after a couple seconds re-register it again.</p>
@@ -234,7 +256,7 @@ You can easily achieve this by deregistering the input system and after a couple
 <h2>Manipulating Components<a class="headerlink" href="#manipulating-components" title="Permalink to this headline">¶</a></h2>
 <p>Running a program is in essence nothing more than manipulating data.
 That’s why the engine is somewhat Data Oriented and separates the logic from the data.
-However when the data is stored in Components, how can a System access this data?
+However when the data is stored in Components, how can a System <strong>access this data</strong>?
 The simplest way to do this is with a special iterator and for loop.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
 <span class="p">{</span>
@@ -243,8 +265,8 @@ The simplest way to do this is with a special iterator and for loop.</p>
 </pre></div>
 </div>
 <p>You use the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code> to specify which components an Entity must have.
-Then the list will contain an iterator which only return the Entities which have those components added to them.
-This means you can not only input one component type like above, but actually multiple component types.</p>
+Then the list will contain an <strong>iterator</strong> which only returns the Entities which have those components added to them.
+This means you can not only input one component type like above, but actually <strong>multiple component types</strong>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="p">,</span> <span class="n">zel_mesh_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="c1">//Now you can use the transform and the material components here</span>
@@ -252,11 +274,35 @@ This means you can not only input one component type like above, but actually mu
 </pre></div>
 </div>
 </div>
-<div class="section" id="why">
-<h2>Why?<a class="headerlink" href="#why" title="Permalink to this headline">¶</a></h2>
-<p>The reason why the engine uses Systems is to reduce the amount of cache misses.
-Instructions are also data and they are put into instruction cache before they are ran by the CPU.
-Reducing the amount of times to fetch instructions from main memory(RAM) can greatly reduce the time it takes to run your code.</p>
+<div class="section" id="accessing-specific-entities">
+<h2>Accessing Specific Entities<a class="headerlink" href="#accessing-specific-entities" title="Permalink to this headline">¶</a></h2>
+<p>You may want to only manipulate the transform components of all the enemies.
+How can this be achieved?</p>
+<p>You already know how to access specific components.
+So to access certain components from specific entities you only need to tag them.
+A tag can be just a simple empty struct.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">enemy_t</span> <span class="p">{</span> <span class="p">};</span>
+</pre></div>
+</div>
+<p>Add this tag to all the enemies.
+It’s just like any other component.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//Don&#39;t forget to register the tag as a component</span>
+<span class="n">zel_level_register_component</span><span class="o">&lt;</span><span class="n">enemy_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">);</span>
+
+<span class="n">enemy_t</span> <span class="n">enemy_tag</span><span class="p">;</span>
+<span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">enemy1_entity</span><span class="p">,</span> <span class="n">enemy_tag</span><span class="p">);</span>
+<span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">enemy2_entity</span><span class="p">,</span> <span class="n">enemy_tag</span><span class="p">);</span>
+</pre></div>
+</div>
+<p>Then to access only the transform components of all the enemies you use the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code> like normal.
+This time asking for the <code class="docutils literal notranslate"><span class="pre">zel_transform_t</span></code> and <code class="docutils literal notranslate"><span class="pre">enemy_t</span></code> components.
+Which will give you only enemy transform components, since only enemies have the enemy tag attached to them.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">enemy_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="p">{</span>
+        <span class="c1">//Now you can manipulate all the transform components of the enemies.</span>
+<span class="p">}</span>
+</pre></div>
+</div>
 </div>
 </div>
 
@@ -305,7 +351,18 @@ Reducing the amount of times to fetch instructions from main memory(RAM) can gre
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>

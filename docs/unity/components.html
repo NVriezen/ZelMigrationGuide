@@ -1,5 +1,6 @@
 
 
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" >
 <head>
@@ -14,6 +15,7 @@
   <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="../_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
 
   
   
@@ -101,7 +103,6 @@
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#transform">Transform</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-transform-component">Accessing Transform Component</a></li>
 <li class="toctree-l2"><a class="reference internal" href="gameobjects.html#accessing-gameobject">Accessing GameObject</a></li>
-<li class="toctree-l2"><a class="reference internal" href="gameobjects.html#why">Why?</a></li>
 </ul>
 </li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Components</a><ul>
@@ -114,7 +115,7 @@
 <li class="toctree-l2"><a class="reference internal" href="update.html#system">System</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#differences">Differences</a></li>
 <li class="toctree-l2"><a class="reference internal" href="update.html#manipulating-components">Manipulating Components</a></li>
-<li class="toctree-l2"><a class="reference internal" href="update.html#why">Why?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="update.html#accessing-specific-entities">Accessing Specific Entities</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="scenes.html">Scenes</a><ul>
@@ -199,20 +200,33 @@ The reason for this is to be able to pack this <strong>data closely together</st
 <div class="section" id="only-data">
 <h2>Only Data<a class="headerlink" href="#only-data" title="Permalink to this headline">¶</a></h2>
 <p>Take for example in-game movement. You could have a player and 5 enemies.
-They all move in the same way so their <strong>code is identical</strong>.
-In Unity you make a base component or class. Let’s call it the movement component.
+They all move in the same way so their <strong>code is identical</strong>.</p>
+<p>In Unity you make a base component or class. Let’s call it the movement component.
 You would write your movement code in there.
 The player and enemy classes will <strong>inherit</strong> from this movement class.
-So when you call player.Move() or enemy.Move(), <strong>the same code gets executed</strong>.</p>
+So when you call player.Move() or enemy.Move() <strong>the same code gets executed</strong>.</p>
 <p>The way the Zel Game Engine handles this is a bit different.
 <strong>Data and logic are separated</strong>, but we still have a movement component.
 This component only contains the variables for the velocity, acceleration, etc.
 We add this component to the player and enemy Entities, just like we would in Unity.</p>
 <p>The movement code however, which is identical between player and enemy, is located in a <a class="reference internal" href="update.html#unity-update"><span class="std std-ref">System</span></a>.
-This System <strong>manipulates all movement components</strong>.
-The benefit of this is that data is closely packed together in memory.
+This System <strong>manipulates all movement components</strong>.</p>
+<div class="in-depth admonition">
+<p class="admonition-title">Why?</p>
+<p>The benefit of this is that data is closely packed together in memory.
 When the CPU runs the code it doesn’t have to constantly wait for data to be fetched from RAM. Which is a <strong>very slow process</strong> compared to fetching from cache.</p>
+<p>However, the code in the systems, so the <strong>CPU instructions</strong>, also don’t have to be fetched that often from RAM.
+Since we use the same system to manipulate the data, the CPU instructions are <strong>already in cache</strong>.
+They <strong>don’t change</strong> and therefore the CPU only has to change which data is getting manipulated.</p>
+<p>When using the object oriented approach, you would constantly need to load new data.
+The code may be the same, but when switching from one enemy to the other, the <strong>whole object</strong> gets loaded in cache.
+So if the enemy stores health and attack information for example.
+That would get loaded into the cache, <strong>wasting valuable space</strong>.</p>
+<p>You only need the movement data.
+That’s exactly why in the data oriented approach you will <strong>split up the data</strong>.
+Reducing the amount of wasted space in cache and therefore the amount of times you load data from RAM.</p>
 <p>For a <strong>quick explanation</strong> what cache is and the difference between cache and main memory(RAM) you can watch <a class="reference external" href="https://www.youtube.com/watch?v=IA8au8Qr3lo">this YouTube video</a> from Eye on Tech.</p>
+</div>
 </div>
 <div class="section" id="using-adding-components">
 <h2>Using &amp; Adding Components<a class="headerlink" href="#using-adding-components" title="Permalink to this headline">¶</a></h2>
@@ -221,28 +235,28 @@ When the CPU runs the code it doesn’t have to constantly wait for data to be f
 <span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">transform</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>What is different however is the need to register component types.
+<p>What is different however is the need to <strong>register component types</strong>.
 That means if you want to use a Transform Component you need to register it.
-Otherwise the engine does not know about the Component and it will crash.
+Otherwise the engine does not know about the Component and it will <strong>crash</strong>.
 You can do this at any time, but it is recommended to do this when creating a <a class="reference internal" href="scenes.html#unity-scenes"><span class="std std-ref">Level</span></a>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_level_register_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>For a more detailed explanation about registering components, please see the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/components.html#registering-components">Components section</a> in the engine’s documentation.</p>
+<p>For a more detailed <strong>explanation about registering</strong> components, please see the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/components.html#registering-components">Components section</a> in the engine’s documentation.</p>
 </div>
 <div class="section" id="getting-components">
 <h2>Getting Components<a class="headerlink" href="#getting-components" title="Permalink to this headline">¶</a></h2>
-<p>When you want to access a variable in a certain component, you first have to get a pointer to that component.
+<p>When you want to <strong>access a variable</strong> in a certain component, you first have to get a pointer to that component.
 This is done in a somewhat similar way as with Unity’s <code class="docutils literal notranslate"><span class="pre">gameObject.GetComponent()</span></code>.
 However you also need to pass the Level where the Entity exists in.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">transform_component_ptr</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>There is also a way to only check if an entity has a certain combination of components.</p>
+<p>There is also a way to only <strong>check</strong> if an entity has a certain <strong>combination of components</strong>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_level_has_components</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>As you can see you can pass in only one or multiple component types.</p>
+<p>As you can see you can pass in only <strong>one or multiple component types</strong>.</p>
 <p>Again, if you’d like to get a more detailed look at Components, look at the <a class="reference external" href="https://nvriezen.github.io/ZelEngineDocs/basics/components.html">engine’s documentation</a>.</p>
 </div>
 </div>
@@ -292,7 +306,18 @@ However you also need to pass the Level where the Entity exists in.</p>
   
   
     
-   
+  
+ <script type="text/javascript">
+    $(document).ready(function() {
+        $(".toggle > *").hide();
+        $(".toggle .admonition-title").show();
+        $(".toggle .admonition-title").click(function() {
+            $(this).parent().children().not(".admonition-title").toggle(200);
+            $(this).parent().children(".admonition-title").toggleClass("open");
+        })
+    });
+</script>
+
 
 </body>
 </html>
