@@ -75,6 +75,10 @@ You can easily achieve this by deregistering the input system and after a couple
 
     zel_level_unregister_system(example_level, "MyCustomSystem");
 
+.. tip::
+
+	There is a template included to make it easier for you to design your own systems. Check out where you can find it, in the `documentation <https://nvriezen.github.io/ZelEngineDocs/basics/systems.html#template>`_
+
 Manipulating Components
 -----------------------
 Running a program is in essence nothing more than manipulating data.
