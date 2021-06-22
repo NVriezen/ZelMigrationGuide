@@ -1,7 +1,7 @@
 .. _unity_update:
 
-Update
-======
+Update & Other Logic
+====================
 In Unity every class or Component that inherits from ``MonoBehaviour`` can use the ``Update`` function.
 This is where you can put code which should run **every frame**.
 Apart from ``Update`` there is also ``FixedUpdate`` and ``LateUpdate``.
