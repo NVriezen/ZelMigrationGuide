@@ -103,16 +103,18 @@ When we give our player a tag we can easily find it through using the ``zel_enti
 
 .. code-block:: cpp
 
+	//This will go at the top of a file
 	struct player_one_tag { };
 
+	//Put this alongside you initialization code
 	zel_entity_id player_entity;
 	player_one_tag player1_tag;
 
 	zel_level_register_component<player_one_tag>(example_level);
 	zel_level_add_component(example_level, player_entity, player1_tag);
 
-	//This code would be placed inside a system
-	for (zel_entity_id entity : zel_entities_list<zel_transform, player1_tag>(level))
+	//This code would be placed inside a system or basically be the system
+	for (zel_entity_id entity : zel_entities_list<zel_transform_t, player_one_tag>(level))
 	{
 		//Now we only get player 1 as entity
 		//So we can access player 1 and its transform component here.

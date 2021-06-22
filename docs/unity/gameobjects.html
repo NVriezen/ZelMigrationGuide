@@ -270,16 +270,18 @@ This is done by looking at the components an entity contains.</p>
 </pre></div>
 </div>
 <p>When we give our player a tag we can easily find it through using the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">struct</span> <span class="nc">player_one_tag</span> <span class="p">{</span> <span class="p">};</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//This will go at the top of a file</span>
+<span class="k">struct</span> <span class="nc">player_one_tag</span> <span class="p">{</span> <span class="p">};</span>
 
+<span class="c1">//Put this alongside you initialization code</span>
 <span class="n">zel_entity_id</span> <span class="n">player_entity</span><span class="p">;</span>
 <span class="n">player_one_tag</span> <span class="n">player1_tag</span><span class="p">;</span>
 
 <span class="n">zel_level_register_component</span><span class="o">&lt;</span><span class="n">player_one_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">);</span>
 <span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">player_entity</span><span class="p">,</span> <span class="n">player1_tag</span><span class="p">);</span>
 
-<span class="c1">//This code would be placed inside a system</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform</span><span class="p">,</span> <span class="n">player1_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="c1">//This code would be placed inside a system or basically be the system</span>
+<span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">player_one_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
 <span class="p">{</span>
         <span class="c1">//Now we only get player 1 as entity</span>
         <span class="c1">//So we can access player 1 and its transform component here.</span>
