@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>Update &amp; Other Logic &mdash; Zel Game Engine Migration Guide 0.1.0 documentation</title>
+  <title>Update &amp; Other Logic &mdash; Zel Game Engine Migration Guide 0.4.0 documentation</title>
   
 
   
@@ -261,17 +261,19 @@ You can easily achieve this by deregistering the input system and after a couple
 <p>Running a program is in essence nothing more than manipulating data.
 That’s why the engine is somewhat Data Oriented and separates the logic from the data.
 However when the data is stored in Components, how can a System <strong>access this data</strong>?
-The simplest way to do this is with a special iterator and for loop.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+The simplest way to do this is with the entity collection of the engine and a for loop.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">zel_entity_id</span><span class="o">&gt;</span> <span class="n">entity_collection</span> <span class="o">=</span> <span class="n">zel_entity_collection_create</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">collection_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">collection_index</span> <span class="o">&lt;</span> <span class="n">entity_collection</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">collection_index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">//use the transform component here</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>You use the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code> to specify which components an Entity must have.
-Then the list will contain an <strong>iterator</strong> which only returns the Entities which have those components added to them.
+<p>You use the <code class="docutils literal notranslate"><span class="pre">zel_entity_collection</span></code> functions to specify which components an Entity must have.
+Then the <code class="docutils literal notranslate"><span class="pre">std::vector</span></code> it returns will only contain the Entities which have those components added to them.
 This means you can not only input one component type like above, but actually <strong>multiple component types</strong>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="p">,</span> <span class="n">zel_mesh_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">zel_entity_id</span><span class="o">&gt;</span> <span class="n">entity_collection</span> <span class="o">=</span> <span class="n">zel_entity_collection_create</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">zel_material_t</span><span class="p">,</span> <span class="n">zel_mesh_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">collection_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">collection_index</span> <span class="o">&lt;</span> <span class="n">entity_collection</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">collection_index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">//Now you can use the transform and the material components here</span>
 <span class="p">}</span>
@@ -298,10 +300,11 @@ It’s just like any other component.</p>
 <span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">enemy2_entity</span><span class="p">,</span> <span class="n">enemy_tag</span><span class="p">);</span>
 </pre></div>
 </div>
-<p>Then to access only the transform components of all the enemies you use the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code> like normal.
+<p>Then to access only the transform components of all the enemies you use the <code class="docutils literal notranslate"><span class="pre">zel_entity_collection</span></code> functions like normal.
 This time asking for the <code class="docutils literal notranslate"><span class="pre">zel_transform_t</span></code> and <code class="docutils literal notranslate"><span class="pre">enemy_t</span></code> components.
 Which will give you only enemy transform components, since only enemies have the enemy tag attached to them.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">enemy_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">zel_entity_id</span><span class="o">&gt;</span> <span class="n">entity_collection</span> <span class="o">=</span> <span class="n">zel_entity_collection_create</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">enemy_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">collection_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">collection_index</span> <span class="o">&lt;</span> <span class="n">entity_collection</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">collection_index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">//Now you can manipulate all the transform components of the enemies.</span>
 <span class="p">}</span>

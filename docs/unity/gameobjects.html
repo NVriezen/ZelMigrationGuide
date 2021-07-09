@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   
-  <title>GameObjects &mdash; Zel Game Engine Migration Guide 0.1.0 documentation</title>
+  <title>GameObjects &mdash; Zel Game Engine Migration Guide 0.4.0 documentation</title>
   
 
   
@@ -233,7 +233,7 @@ However it gives us a lot of flexibility over the standard Object Oriented appro
 <h2>Transform<a class="headerlink" href="#transform" title="Permalink to this headline">¶</a></h2>
 <p><strong>GameObjects</strong> in <strong>Unity</strong> always have a name and a transform component.
 In the <strong>Zel Game Engine</strong> you can still create this same setup yourself, since the source code is open. You can make changes however you like.</p>
-<p>However in the <strong>Zel Game Engine</strong> when you create an <strong>Entity</strong> it has no components attached to it yet. You can easily attach the built in Transform Component to it. This can be done in the following way.</p>
+<p>However in the <strong>Zel Game Engine</strong> when you create an <strong>Entity</strong> it has no components attached to it yet. You can easily attach the built-in Transform Component to it. This can be done in the following way.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">zel_transform_t</span> <span class="n">transform</span><span class="p">{</span> <span class="p">{</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span> <span class="p">},{</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span><span class="p">,</span> <span class="mf">0.0f</span> <span class="p">},{</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span><span class="p">,</span> <span class="mf">1.0f</span> <span class="p">}</span> <span class="p">};</span>
 <span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">,</span> <span class="n">transform</span><span class="p">);</span>
 </pre></div>
@@ -263,13 +263,14 @@ We could store the entity ID and access an Entity in that way.
 However if we don’t have the entity ID, but we only want to run code for the player?
 As further explained in the <a class="reference internal" href="scenes.html#unity-scenes"><span class="std std-ref">Update section</span></a> systems can iterate over entities.
 This is done by looking at the components an entity contains.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">zel_entity_id</span><span class="o">&gt;</span> <span class="n">entity_collection</span> <span class="o">=</span> <span class="n">zel_entity_collection_create</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">collection_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">collection_index</span> <span class="o">&lt;</span> <span class="n">entity_collection</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">collection_index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
-                <span class="c1">//use the transform component here</span>
+        <span class="c1">//use the transform component here</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>When we give our player a tag we can easily find it through using the <code class="docutils literal notranslate"><span class="pre">zel_entities_list</span></code>.</p>
+<p>When we give our player a tag we can easily find it through using the <code class="docutils literal notranslate"><span class="pre">zel_entity_collection</span></code> functions.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="c1">//This will go at the top of a file</span>
 <span class="k">struct</span> <span class="nc">player_one_tag</span> <span class="p">{</span> <span class="p">};</span>
 
@@ -281,11 +282,13 @@ This is done by looking at the components an entity contains.</p>
 <span class="n">zel_level_add_component</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">player_entity</span><span class="p">,</span> <span class="n">player1_tag</span><span class="p">);</span>
 
 <span class="c1">//This code would be placed inside a system or basically be the system</span>
-<span class="k">for</span> <span class="p">(</span><span class="n">zel_entity_id</span> <span class="nl">entity</span> <span class="p">:</span> <span class="n">zel_entities_list</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">player_one_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">))</span>
+<span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">zel_entity_id</span><span class="o">&gt;</span> <span class="n">entity_collection</span> <span class="o">=</span> <span class="n">zel_entity_collection_create</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="p">,</span> <span class="n">player_one_tag</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">);</span>
+<span class="k">for</span> <span class="p">(</span><span class="kt">size_t</span> <span class="n">collection_index</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">collection_index</span> <span class="o">&lt;</span> <span class="n">entity_collection</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">collection_index</span><span class="o">++</span><span class="p">)</span>
 <span class="p">{</span>
         <span class="c1">//Now we only get player 1 as entity</span>
         <span class="c1">//So we can access player 1 and its transform component here.</span>
-        <span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">player1_transform</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">example_level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
+        <span class="n">zel_entity_id</span> <span class="n">player1_entity</span> <span class="o">=</span> <span class="n">entity_collection</span><span class="p">[</span><span class="n">collection_index</span><span class="p">];</span>
+        <span class="n">zel_transform_t</span><span class="o">*</span> <span class="n">player1_transform</span> <span class="o">=</span> <span class="n">zel_level_get_component</span><span class="o">&lt;</span><span class="n">zel_transform_t</span><span class="o">&gt;</span><span class="p">(</span><span class="n">level</span><span class="p">,</span> <span class="n">entity</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

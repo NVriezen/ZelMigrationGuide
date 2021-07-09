@@ -84,25 +84,27 @@ Manipulating Components
 Running a program is in essence nothing more than manipulating data.
 That's why the engine is somewhat Data Oriented and separates the logic from the data.
 However when the data is stored in Components, how can a System **access this data**?
-The simplest way to do this is with a special iterator and for loop.
+The simplest way to do this is with the entity collection of the engine and a for loop.
 
 .. code-block:: cpp
 
-    for (zel_entity_id entity : zel_entities_list<zel_transform_t>(level))
-    {
-            //use the transform component here
-    }
+	std::vector<zel_entity_id> entity_collection = zel_entity_collection_create<zel_transform_t>(level);
+	for (size_t collection_index = 0; collection_index < entity_collection.size(); collection_index++)
+	{
+        	//use the transform component here
+	}
 
-You use the ``zel_entities_list`` to specify which components an Entity must have.
-Then the list will contain an **iterator** which only returns the Entities which have those components added to them.
+You use the ``zel_entity_collection`` functions to specify which components an Entity must have.
+Then the ``std::vector`` it returns will only contain the Entities which have those components added to them.
 This means you can not only input one component type like above, but actually **multiple component types**.
 
 .. code-block:: cpp
 
-    for (zel_entity_id entity : zel_entities_list<zel_transform_t, zel_material_t, zel_mesh_t>(level))
-    {
-            //Now you can use the transform and the material components here
-    }
+    	std::vector<zel_entity_id> entity_collection = zel_entity_collection_create<zel_transform_t, zel_material_t, zel_mesh_t>(level);
+	for (size_t collection_index = 0; collection_index < entity_collection.size(); collection_index++)
+	{
+        	//Now you can use the transform and the material components here
+	}
 
 Accessing Specific Entities
 ---------------------------
@@ -129,14 +131,15 @@ It's just like any other component.
     zel_level_add_component(example_level, enemy1_entity, enemy_tag);
     zel_level_add_component(example_level, enemy2_entity, enemy_tag);
 
-Then to access only the transform components of all the enemies you use the ``zel_entities_list`` like normal.
+Then to access only the transform components of all the enemies you use the ``zel_entity_collection`` functions like normal.
 This time asking for the ``zel_transform_t`` and ``enemy_t`` components.
 Which will give you only enemy transform components, since only enemies have the enemy tag attached to them.
 
 .. code-block:: cpp
 
-    for (zel_entity_id entity : zel_entities_list<zel_transform_t, enemy_t>(level))
-    {
-            //Now you can manipulate all the transform components of the enemies.
-    }
+	std::vector<zel_entity_id> entity_collection = zel_entity_collection_create<zel_transform_t, enemy_t>(level);
+	for (size_t collection_index = 0; collection_index < entity_collection.size(); collection_index++)
+	{
+        	//Now you can manipulate all the transform components of the enemies.
+	}
 

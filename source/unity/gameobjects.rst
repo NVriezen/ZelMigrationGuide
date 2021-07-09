@@ -55,7 +55,7 @@ Transform
 **GameObjects** in **Unity** always have a name and a transform component.
 In the **Zel Game Engine** you can still create this same setup yourself, since the source code is open. You can make changes however you like.
 
-However in the **Zel Game Engine** when you create an **Entity** it has no components attached to it yet. You can easily attach the built in Transform Component to it. This can be done in the following way.
+However in the **Zel Game Engine** when you create an **Entity** it has no components attached to it yet. You can easily attach the built-in Transform Component to it. This can be done in the following way.
 
 .. code-block:: cpp
 
@@ -94,12 +94,13 @@ This is done by looking at the components an entity contains.
 
 .. code-block:: cpp
 
-	for (zel_entity_id entity : zel_entities_list<zel_transform_t>(level))
+	std::vector<zel_entity_id> entity_collection = zel_entity_collection_create<zel_transform_t>(level);
+	for (size_t collection_index = 0; collection_index < entity_collection.size(); collection_index++)
 	{
-			//use the transform component here
+		//use the transform component here
 	}
 
-When we give our player a tag we can easily find it through using the ``zel_entities_list``.
+When we give our player a tag we can easily find it through using the ``zel_entity_collection`` functions.
 
 .. code-block:: cpp
 
@@ -114,11 +115,13 @@ When we give our player a tag we can easily find it through using the ``zel_enti
 	zel_level_add_component(example_level, player_entity, player1_tag);
 
 	//This code would be placed inside a system or basically be the system
-	for (zel_entity_id entity : zel_entities_list<zel_transform_t, player_one_tag>(level))
+	std::vector<zel_entity_id> entity_collection = zel_entity_collection_create<zel_transform_t, player_one_tag>(level);
+	for (size_t collection_index = 0; collection_index < entity_collection.size(); collection_index++)
 	{
 		//Now we only get player 1 as entity
 		//So we can access player 1 and its transform component here.
-		zel_transform_t* player1_transform = zel_level_get_component<zel_transform_t>(example_level, entity);
+		zel_entity_id player1_entity = entity_collection[collection_index];
+		zel_transform_t* player1_transform = zel_level_get_component<zel_transform_t>(level, entity);
 	}
 
 It's also very easy when you somehow want another entity to become player 1.
